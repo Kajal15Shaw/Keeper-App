@@ -12,10 +12,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Needed for __dirname in ES Modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Middleware
 app.use(express.json());
 app.use(cors());
@@ -25,20 +21,21 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error(err));
 
-// API Routes
+// API routes
 app.use('/api/notes', notesRouter);
 
-// Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, '../frontend/dist');
-  app.use(express.static(frontendPath));
+// Serve static frontend
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendPath = path.join(__dirname, '..', 'frontend', 'dist'); // or 'build' depending on your Vite config
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendPath, 'index.html'));
-  });
-}
+app.use(express.static(frontendPath));
 
-// Start the server
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
