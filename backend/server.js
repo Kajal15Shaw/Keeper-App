@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGO_URI)
 // API routes
 app.use('/api/notes', notesRouter);
 
-// Serve static frontend
+/*// Serve static frontend
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const frontendPath = path.join(__dirname, '..', 'frontend', 'dist'); // or 'build' depending on your Vite config
@@ -33,7 +33,7 @@ app.use(express.static(frontendPath));
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
-});
+});*/
 
 // Start server
 app.listen(PORT, () => {
