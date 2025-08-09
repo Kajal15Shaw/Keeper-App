@@ -1,4 +1,3 @@
-// server/routes/notes.js
 import express from 'express';
 import Note from '../models/note.js';
 

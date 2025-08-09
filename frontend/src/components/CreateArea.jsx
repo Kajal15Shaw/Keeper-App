@@ -1,39 +1,31 @@
 // src/components/CreateArea.jsx
 import React, { useState } from "react";
-import MapsUgcOutlinedIcon from '@mui/icons-material/MapsUgcOutlined';
+import MapsUgcOutlinedIcon from "@mui/icons-material/MapsUgcOutlined";
 import { Fab, Zoom } from "@mui/material";
-import axios from 'axios'; // Import axios for making API requests
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || "https://keeper-app-3-khpc.onrender.com";
 
 function CreateArea(props) {
   const [isExpanded, setExpanded] = useState(false);
-
-  const [note, setNote] = useState({
-    title: "",
-    content: "",
-  });
+  const [note, setNote] = useState({ title: "", content: "" });
 
   function handleChange(event) {
     const { name, value } = event.target;
-
-    setNote((prevNote) => {
-      return {
-        ...prevNote,
-        [name]: value,
-      };
-    });
+    setNote((prevNote) => ({ ...prevNote, [name]: value }));
   }
 
   async function submitNote(event) {
     event.preventDefault();
+    if (!note.title.trim() && !note.content.trim()) return; // prevent empty notes
+
     try {
-      await axios.post('http://localhost:5000/api/notes', note);
-      props.onAdd(note); // This will add the note to your local state for a seamless UI update
-      setNote({
-        title: "",
-        content: "",
-      });
+      const res = await axios.post(`${BASE_URL}/api/notes`, note);
+      props.onAdd(res.data); // use backend response so _id is included
+      setNote({ title: "", content: "" });
+      setExpanded(false);
     } catch (error) {
-      console.error('Error adding note:', error);
+      console.error("Error adding note:", error);
     }
   }
 
@@ -52,7 +44,6 @@ function CreateArea(props) {
             placeholder="Title"
           />
         )}
-
         <textarea
           name="content"
           onClick={expand}

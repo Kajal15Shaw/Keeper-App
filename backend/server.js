@@ -14,7 +14,14 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://your-vercel-domain.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'DELETE'],
+  credentials: true
+}));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
