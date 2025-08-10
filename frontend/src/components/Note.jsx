@@ -1,4 +1,3 @@
-// src/components/Note.jsx
 import React from "react";
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 

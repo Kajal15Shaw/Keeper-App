@@ -6,7 +6,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'dist', // ← builds into the backend folder
+    outDir: 'dist',
     emptyOutDir: true
   },
   resolve: {

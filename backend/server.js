@@ -1,10 +1,9 @@
-// server.js
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+//import path from 'path';
+//import { fileURLToPath } from 'url';
 import notesRouter from './routes/notes.js';
 
 dotenv.config();
@@ -19,17 +18,17 @@ app.use(cors({
     'http://localhost:5173',
     'https://your-vercel-domain.vercel.app'
   ],
-  methods: ['GET', 'POST', 'DELETE'],
+  methods: ['GET', 'POST', 'UPDATE', 'DELETE'],
   credentials: true
 }));
+
+// API routes
+app.use('/api/notes', notesRouter);
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error(err));
-
-// API routes
-app.use('/api/notes', notesRouter);
 
 /*// Serve static frontend
 const __filename = fileURLToPath(import.meta.url);
