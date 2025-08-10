@@ -18,7 +18,7 @@ app.use(cors({
     'http://localhost:5173',
     'https://your-vercel-domain.vercel.app'
   ],
-  methods: ['GET', 'POST', 'UPDATE', 'DELETE'],
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
   credentials: true
 }));
 
